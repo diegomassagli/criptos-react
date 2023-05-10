@@ -1,4 +1,4 @@
-import React from 'react'
+import { useState } from 'react'
 import styled from '@emotion/styled'
 
 const Label = styled.label`
@@ -19,11 +19,16 @@ const Select = styled.select`
   
 
 const useSelectMonedas = (label, opciones) => {
+
+  const [state, setState] = useState('')
  
   const SelectMonedas = () => (   // con los parentesis en lugar de llaves es porque "voy a imprimir algo en pantalla"
     <>
       <Label>{label}</Label>
-      <Select>
+      <Select
+        value={state}
+        onChange={ e => setState( e.target.value )}
+      >
         <option value="">Seleccione</option>
         {opciones.map ( opcion => (
           <option
@@ -35,7 +40,7 @@ const useSelectMonedas = (label, opciones) => {
     </>
   )
 
-  return [ SelectMonedas ]
+  return [ state, SelectMonedas ]  // con esto el hook tiene estado y lo retorno hacia donde use el componente (lo tengo que recibir con cualquier nombre)
 }
 
 export default useSelectMonedas
